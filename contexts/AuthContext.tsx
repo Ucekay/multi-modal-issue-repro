@@ -1,4 +1,5 @@
-import React, {
+import type React from 'react';
+import {
 	type PropsWithChildren,
 	createContext,
 	useContext,
@@ -17,6 +18,8 @@ const AuthContext = createContext<{
 	isLoading: false,
 });
 
+AuthContext.displayName = 'AuthContext';
+
 export function useSession() {
 	const value = useContext(AuthContext);
 	if (process.env.NODE_ENV !== 'production') {
@@ -27,7 +30,9 @@ export function useSession() {
 	return value;
 }
 
-export function SessionProvider({ children }: PropsWithChildren) {
+export function SessionProvider({
+	children,
+}: PropsWithChildren): React.JSX.Element {
 	const [session, setSession] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
 
